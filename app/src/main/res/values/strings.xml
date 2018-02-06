@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">QQ</string>
+    <string name="title">消息</string>
+    <string name="chat">发起多人聊天</string>
+    <string name="add_friends">加好友</string>
+    <string name="scan">扫一扫</string>
+    <string name="file_transfer">面对面快传</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

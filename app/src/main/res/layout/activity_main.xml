@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.nyt.qq.MainActivity">
+    <!--标题栏-->
+    <RelativeLayout
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/royalBlue"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp">
+
+        <ImageButton
+            android:id="@+id/contacts"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/contacts" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/title"
+            android:textColor="@color/white"
+            android:textSize="27dp" />
+
+        <ImageButton
+            android:id="@+id/message_page_popuplist"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/add" />
+    </RelativeLayout>
+
+    <!--第一页，消息-->
+    <RelativeLayout
+        android:id="@+id/message_page"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tab"
+        android:layout_below="@+id/title_bar">
+
+        <SearchView
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+             />
+
+        <ListView
+            android:id="@+id/message_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/search" />
+
+
+    </RelativeLayout>
+    <!--第二页，联系人-->
+    <RelativeLayout
+        android:id="@+id/contact_page"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tab"
+        android:visibility="gone"
+        android:layout_below="@id/title_bar">
+
+        <ExpandableListView
+            android:id="@+id/contact_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </ExpandableListView>
+    </RelativeLayout>
+    <!--第三页，办公-->
+    <RelativeLayout
+        android:id="@+id/work_page"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tab"
+        android:visibility="gone"
+        android:layout_below="@id/title_bar">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="办公"
+            android:textSize="20dp" />
+    </RelativeLayout>
+    <ListView
+        android:id="@+id/popup_list"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:visibility="gone"
+        android:layout_below="@id/title_bar"/>
+
+    <RelativeLayout
+        android:id="@+id/tab"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey69" />
+
+        <ImageButton
+            android:id="@+id/message_tab"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="30dp"
+            android:background="@drawable/message_blue" />
+
+        <ImageButton
+            android:id="@+id/contact_tab"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/file_gray" />
+
+        <ImageButton
+            android:id="@+id/work_tab"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/work_gray" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
