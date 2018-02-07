@@ -2,15 +2,14 @@ package com.example.nyt.qq;
 
 import android.content.Context;
 import android.content.Intent;
-import android.provider.ContactsContract;
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -20,15 +19,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.zip.Inflater;
 
 public class ChatActivity extends AppCompatActivity {
     private String[] moreFunctionsNames = new String[]{"qq电话", "视频电话", "文件", "在线文档",
-            "日程", "收藏", "发红包", "推荐好友","转账", "位置"};
+            "日程", "收藏", "发红包", "推荐好友", "转账", "位置"};
     private int[] moreFunctionsImages = new int[]{R.drawable.qq_phone, R.drawable.video, R.drawable.folder,
             R.drawable.cloud_file, R.drawable.calendar, R.drawable.collection, R.drawable.red_envelope,
-            R.drawable.recommend_friend,R.drawable.transfer, R.drawable.location};
+            R.drawable.recommend_friend, R.drawable.transfer, R.drawable.location};
     private TextView nickNameChatting;
     private ImageButton returnButton, moreButton;
     private boolean viewPagerOpened = false;
@@ -36,6 +33,7 @@ public class ChatActivity extends AppCompatActivity {
     private RelativeLayout inputBar;
     private ArrayList<GridView> gridViewList;
     private LinearLayout morePages;
+    EditText inputEditText;
 
     private ImageView pageOneCircle, pageTwoCircle;
 
@@ -83,48 +81,31 @@ public class ChatActivity extends AppCompatActivity {
                 }
             }
         });
+
+
     }
 
     void pageViewInit() {
-//       初始化GridView
-//       View pageOne=LayoutInflater.from(ChatActivity.this).inflate(R.layout.page_one,null);
-//       View pageTwo=LayoutInflater.from(ChatActivity.this).inflate(R.layout.page_two,null);
-//       pageOneGridView=(GridView)pageOne.findViewById(R.id.page_one_gridview);
-//       pageTwoGridView=(GridView)pageTwo.findViewById(R.id.page_two_gridview);
-//       PageGridViewAdapter pageGridViewOneAdapter=new PageGridViewAdapter(ChatActivity.this,
-//               moreFunctionsNamesOnPageOne,moreFunctionsImagesOnPageOne);
-//       PageGridViewAdapter pageGridViewTwoAdapter= new PageGridViewAdapter(ChatActivity.this,
-//               moreFunctionsNamesOnPageTwo,moreFunctionsImagesOnPageTwo);
-//       pageOneGridView.setAdapter(pageGridViewOneAdapter);
-//       pageTwoGridView.setAdapter(pageGridViewTwoAdapter);
-//        初始化ViewPager
-//        gridViewList = new ArrayList<GridView>();
-//        LayoutInflater layoutInflater = getLayoutInflater();
-//        pageViewList.add(layoutInflater.inflate(R.layout.page_one, null, false));
-//        pageViewList.add(layoutInflater.inflate(R.layout.page_two, null, false));
-//        viewPager = (ViewPager) findViewById(R.id.view_pager);
-
         gridViewList = new ArrayList<GridView>();
-
 //        初始化GridView
-        ArrayList<String> names=new ArrayList<String>();
-        ArrayList<Integer> images= new ArrayList<Integer>();
-        for(int i=0;i<moreFunctionsNames.length;i++){
+        ArrayList<String> names = new ArrayList<String>();
+        ArrayList<Integer> images = new ArrayList<Integer>();
+        for (int i = 0; i < moreFunctionsNames.length; i++) {
             names.add(moreFunctionsNames[i]);
             images.add(moreFunctionsImages[i]);
-            if(names.size()==8){
-                GridView gridView= gridViewCreate(names,images);
+            if (names.size() == 8) {
+                GridView gridView = gridViewCreate(names, images);
                 gridViewList.add(gridView);
-                names=new ArrayList<String>();
-                images= new ArrayList<Integer>();
+                names = new ArrayList<String>();
+                images = new ArrayList<Integer>();
             }
         }
-        if(names.size()>0){
-            GridView gridView= gridViewCreate(names,images);
+        if (names.size() > 0) {
+            GridView gridView = gridViewCreate(names, images);
             gridViewList.add(gridView);
         }
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(gridViewList);
-        viewPager=(ViewPager)findViewById(R.id.view_pager) ;
+        viewPager = (ViewPager) findViewById(R.id.view_pager);
         viewPager.setAdapter(viewPagerAdapter);
 
 //       小圆点在翻页时改变
@@ -151,35 +132,37 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
     }
-    private GridView gridViewCreate(final ArrayList<String> names, ArrayList<Integer> images){
-        GridView gridView=new GridView(this);
+
+    private GridView gridViewCreate(final ArrayList<String> names, ArrayList<Integer> images) {
+        GridView gridView = new GridView(this);
         gridView.setBackgroundResource(R.color.white);
         gridView.setNumColumns(4);
-        gridView.setPadding(dip2px(this,35),dip2px(this,20),
-                dip2px(this,35),dip2px(this,20));
-        gridView.setHorizontalSpacing(dip2px(this,25));
-        gridView.setVerticalSpacing(dip2px(this,20));
-        LinearLayout.LayoutParams params =new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+        gridView.setPadding(dip2px(this, 35), dip2px(this, 20),
+                dip2px(this, 35), dip2px(this, 20));
+        gridView.setHorizontalSpacing(dip2px(this, 25));
+        gridView.setVerticalSpacing(dip2px(this, 20));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         gridView.setLayoutParams(params);
-        PageGridViewAdapter gridViewAdapter=new PageGridViewAdapter(this,names,images);
+        PageGridViewAdapter gridViewAdapter = new PageGridViewAdapter(this, names, images);
         gridView.setAdapter(gridViewAdapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(ChatActivity.this,names.get(position)+"被点击",Toast.LENGTH_SHORT).show();
+                Toast.makeText(ChatActivity.this, names.get(position) + "被点击", Toast.LENGTH_SHORT).show();
             }
         });
         gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(ChatActivity.this,"长按"+names.get(position),Toast.LENGTH_SHORT).show();
+                Toast.makeText(ChatActivity.this, "长按" + names.get(position), Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
         return gridView;
 
     }
+
     public static int dip2px(Context context, float dpValue) {
         float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
