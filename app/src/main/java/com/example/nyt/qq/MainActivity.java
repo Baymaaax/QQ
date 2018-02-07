@@ -3,15 +3,11 @@ package com.example.nyt.qq;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -73,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
         messageList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent =new Intent(MainActivity.this,ChatActivity.class);
-                intent.putExtra("nickname",nickNames[position]);
+                Intent intent = new Intent(MainActivity.this, ChatActivity.class);
+                intent.putExtra("nickname", nickNames[position]);
                 startActivity(intent);
             }
         });
@@ -178,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void rename(final int groupPosition) {
                 final RenameDialogFragment renameGroup = new RenameDialogFragment(groupPosition,
-                        groupNames, contactNickNames,contactListAdapter);
+                        groupNames, contactNickNames, contactListAdapter);
                 renameGroup.show(getFragmentManager(), "dialog_fragment");
             }
         });
@@ -187,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void rename(final int groupPosition, final int childPosition) {
                 final RenameDialogFragment renameChild = new RenameDialogFragment(groupPosition,
-                        childPosition,groupNames, contactNickNames,contactListAdapter);
+                        childPosition, groupNames, contactNickNames, contactListAdapter);
                 renameChild.show(getFragmentManager(), "dialog_fragment");
             }
         });
@@ -195,10 +191,10 @@ public class MainActivity extends AppCompatActivity {
         contactListAdapter.setShowAvaterListener(new ContactListAdapter.ShowAvater() {
             @Override
             public void show(final int groupPosition, final int childPosition) {
-                Intent intent =new Intent(MainActivity.this,ShowAvatarActivity.class);
-                Bundle bundle =new Bundle();
-                bundle.putInt("groupPosition",groupPosition);
-                bundle.putInt("childPosition",childPosition);
+                Intent intent = new Intent(MainActivity.this, ShowAvatarActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("groupPosition", groupPosition);
+                bundle.putInt("childPosition", childPosition);
                 intent.putExtras(bundle);
                 startActivity(intent);
 

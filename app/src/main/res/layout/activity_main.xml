@@ -50,8 +50,7 @@
         <SearchView
             android:id="@+id/search"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-             />
+            android:layout_height="wrap_content" />
 
         <ListView
             android:id="@+id/message_list"
@@ -67,8 +66,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/tab"
-        android:visibility="gone"
-        android:layout_below="@id/title_bar">
+        android:layout_below="@id/title_bar"
+        android:visibility="gone">
 
         <ExpandableListView
             android:id="@+id/contact_list"
@@ -83,8 +82,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/tab"
-        android:visibility="gone"
-        android:layout_below="@id/title_bar">
+        android:layout_below="@id/title_bar"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
@@ -93,15 +92,16 @@
             android:text="办公"
             android:textSize="20dp" />
     </RelativeLayout>
+
     <ListView
         android:id="@+id/popup_list"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
+        android:layout_below="@id/title_bar"
         android:background="@color/white"
         android:padding="10dp"
-        android:visibility="gone"
-        android:layout_below="@id/title_bar"/>
+        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/tab"

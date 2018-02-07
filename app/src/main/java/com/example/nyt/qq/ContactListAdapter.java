@@ -1,8 +1,6 @@
 package com.example.nyt.qq;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +17,6 @@ public class ContactListAdapter extends BaseExpandableListAdapter {
     private int[][] contactAvatars;
     private Context mContext;
     private String[] groupNames;
-
-
 
 
     public ContactListAdapter(Context mContext, String[] groupNames, int[][] contactAvatars,
@@ -91,7 +87,7 @@ public class ContactListAdapter extends BaseExpandableListAdapter {
         contactAvatar.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                showAvater.show(groupPosition,childPosition);
+                showAvater.show(groupPosition, childPosition);
 
 
                 return true;
@@ -100,7 +96,7 @@ public class ContactListAdapter extends BaseExpandableListAdapter {
         contactNickName.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                renameChild.rename(groupPosition,childPosition);
+                renameChild.rename(groupPosition, childPosition);
 
                 return true;
             }
@@ -114,34 +110,37 @@ public class ContactListAdapter extends BaseExpandableListAdapter {
     }
 
     //重命名昵称
-    public interface RenameChild{
+    public interface RenameChild {
         void rename(final int groupPosition, final int childPosition);
     }
-    private RenameChild  renameChild;
-    public void setRenameChildListener(RenameChild renameChild){
-        this.renameChild=renameChild;
+
+    private RenameChild renameChild;
+
+    public void setRenameChildListener(RenameChild renameChild) {
+        this.renameChild = renameChild;
     }
 
     //重命名组名
-    public interface RenameGroup{
+    public interface RenameGroup {
         void rename(int groupPosition);
     }
+
     private RenameGroup renameGroup;
-    public void setRenameGroupListener(RenameGroup renameGroup){
-        this.renameGroup=renameGroup;
+
+    public void setRenameGroupListener(RenameGroup renameGroup) {
+        this.renameGroup = renameGroup;
     }
 
     //显示头像
-    public interface  ShowAvater{
+    public interface ShowAvater {
         void show(final int groupPosition, final int childPosition);
     }
+
     private ShowAvater showAvater;
-    public void setShowAvaterListener(ShowAvater showAvater){
-        this.showAvater=showAvater;
+
+    public void setShowAvaterListener(ShowAvater showAvater) {
+        this.showAvater = showAvater;
     }
-
-
-
 
 
 }

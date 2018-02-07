@@ -33,8 +33,7 @@ public class ChatActivity extends AppCompatActivity {
     private RelativeLayout inputBar;
     private ArrayList<GridView> gridViewList;
     private LinearLayout morePages;
-    EditText inputEditText;
-
+    private EditText inputEditText;
     private ImageView pageOneCircle, pageTwoCircle;
 
 
@@ -45,7 +44,7 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
         chatTitleBarInit();
         pageViewInit();
-
+        inputEditText = (EditText) findViewById(R.id.input_edittext);
     }
 
     void chatTitleBarInit() {
@@ -64,18 +63,17 @@ public class ChatActivity extends AppCompatActivity {
         moreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                RelativeLayout inputBar = (RelativeLayout) findViewById(R.id.input_bar);
                 if (viewPagerOpened) {
                     moreButton.setBackgroundResource(R.drawable.more_gray);
                     viewPagerOpened = false;
                     morePages.setVisibility(View.GONE);
-                    RelativeLayout inputBar = (RelativeLayout) findViewById(R.id.input_bar);
                     RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) inputBar.getLayoutParams();
                     params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                 } else {
                     moreButton.setBackgroundResource(R.drawable.more_blue);
                     viewPagerOpened = true;
                     morePages.setVisibility(View.VISIBLE);
-                    RelativeLayout inputBar = (RelativeLayout) findViewById(R.id.input_bar);
                     RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) inputBar.getLayoutParams();
                     params.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                 }

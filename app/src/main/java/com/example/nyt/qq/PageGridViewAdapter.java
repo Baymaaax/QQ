@@ -15,15 +15,17 @@ import java.util.ArrayList;
  */
 
 public class PageGridViewAdapter extends BaseAdapter {
-    private ArrayList<String>names;
+    private ArrayList<String> names;
     private ArrayList<Integer> images;
     private Context mContext;
-    public PageGridViewAdapter(Context mContext, ArrayList<String>names, ArrayList<Integer> images){
+
+    public PageGridViewAdapter(Context mContext, ArrayList<String> names, ArrayList<Integer> images) {
         super();
         this.mContext = mContext;
-        this.names=names;
-        this.images=images;
+        this.names = names;
+        this.images = images;
     }
+
     @Override
     public int getCount() {
         return names.size();
@@ -41,9 +43,9 @@ public class PageGridViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        convertView=LayoutInflater.from(mContext).inflate(R.layout.gridview_item_lagout,null);
-        ImageView imageView=(ImageView)convertView.findViewById(R.id.grid_image);
-        TextView textView=(TextView)convertView.findViewById(R.id.grid_text);
+        convertView = LayoutInflater.from(mContext).inflate(R.layout.gridview_item_lagout, null);
+        ImageView imageView = (ImageView) convertView.findViewById(R.id.grid_image);
+        TextView textView = (TextView) convertView.findViewById(R.id.grid_text);
         imageView.setImageResource(images.get(position));
         textView.setText(names.get(position));
         return convertView;

@@ -13,9 +13,10 @@ import java.util.ArrayList;
 
 public class ViewPagerAdapter extends PagerAdapter {
     private ArrayList<GridView> gridViewList;
+
     public ViewPagerAdapter(ArrayList<GridView> gridViewList) {
         super();
-        this.gridViewList=gridViewList;
+        this.gridViewList = gridViewList;
     }
 
 
@@ -26,7 +27,7 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return view==object;
+        return view == object;
     }
 
     @Override
