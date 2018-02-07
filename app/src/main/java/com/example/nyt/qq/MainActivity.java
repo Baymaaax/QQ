@@ -15,9 +15,6 @@ import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
-    {
-    }
-
     private String[] nickNames = new String[]{"bear", "chicken", "donkey", "elephant", "frog",
             "hippo", "monkey", "panda", "pig", "rabbit", "sheep", "tiger"};
     private int[] avatars = new int[]{R.drawable.bear, R.drawable.chicken, R.drawable.donkey,
@@ -46,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
     private ExpandableListView contactList;
     private TextView title;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,9 +52,7 @@ public class MainActivity extends AppCompatActivity {
         popupWindowInit();
         tabInit();
         contactListInit();
-
     }
-
 
     private void listViewInit() {
         MessageListAdapter messageListAdapter = new MessageListAdapter(MainActivity.this,
@@ -83,11 +77,9 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
     }
 
     private void popupWindowInit() {
-
         popUpList = (ListView) findViewById(R.id.popup_list);
         PopUpAdapter popUpAdapter = new PopUpAdapter(MainActivity.this, popupText, popupImage);
         popUpList.setAdapter(popUpAdapter);
@@ -101,9 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     popUpList.setVisibility(View.VISIBLE);
                     PopuoWindowPopped = true;
-
                 }
-
             }
         });
     }
@@ -116,8 +106,6 @@ public class MainActivity extends AppCompatActivity {
         contactTab = (ImageButton) findViewById(R.id.contact_tab);
         workTab = (ImageButton) findViewById(R.id.work_tab);
         title = (TextView) findViewById(R.id.title);
-
-
         messageTab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,8 +118,6 @@ public class MainActivity extends AppCompatActivity {
                 title.setText("消息");
                 popUpList.setVisibility(View.GONE);
                 PopuoWindowPopped = false;
-
-
             }
         });
         contactTab.setOnClickListener(new View.OnClickListener() {
@@ -197,11 +183,7 @@ public class MainActivity extends AppCompatActivity {
                 bundle.putInt("childPosition", childPosition);
                 intent.putExtras(bundle);
                 startActivity(intent);
-
             }
         });
-
-
     }
-
 }

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -26,16 +27,14 @@ public class ChatActivity extends AppCompatActivity {
     private int[] moreFunctionsImages = new int[]{R.drawable.qq_phone, R.drawable.video, R.drawable.folder,
             R.drawable.cloud_file, R.drawable.calendar, R.drawable.collection, R.drawable.red_envelope,
             R.drawable.recommend_friend, R.drawable.transfer, R.drawable.location};
-    private TextView nickNameChatting;
     private ImageButton returnButton, moreButton;
     private boolean viewPagerOpened = false;
-    private ViewPager viewPager;
     private RelativeLayout inputBar;
     private ArrayList<GridView> gridViewList;
     private LinearLayout morePages;
     private EditText inputEditText;
     private ImageView pageOneCircle, pageTwoCircle;
-
+    private boolean editTexthasFocus = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +44,22 @@ public class ChatActivity extends AppCompatActivity {
         chatTitleBarInit();
         pageViewInit();
         inputEditText = (EditText) findViewById(R.id.input_edittext);
+        inputEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    moreButton.callOnClick();
+                    editTexthasFocus = true;
+                } else {
+                    editTexthasFocus = false;
+                }
+            }
+        });
     }
 
     void chatTitleBarInit() {
         Intent intent = getIntent();
-        nickNameChatting = (TextView) findViewById(R.id.nick_name_chatting);
+        TextView nickNameChatting = (TextView) findViewById(R.id.nick_name_chatting);
         nickNameChatting.setText(intent.getStringExtra("nickname"));
         returnButton = (ImageButton) findViewById(R.id.return_button);
         returnButton.setOnClickListener(new View.OnClickListener() {
@@ -64,23 +74,40 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 RelativeLayout inputBar = (RelativeLayout) findViewById(R.id.input_bar);
-                if (viewPagerOpened) {
-                    moreButton.setBackgroundResource(R.drawable.more_gray);
-                    viewPagerOpened = false;
-                    morePages.setVisibility(View.GONE);
-                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) inputBar.getLayoutParams();
-                    params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                if (!editTexthasFocus) {
+                    if (viewPagerOpened) {
+                        moreButton.setBackgroundResource(R.drawable.more_gray);
+                        viewPagerOpened = false;
+                        morePages.setVisibility(View.GONE);
+                        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) inputBar.getLayoutParams();
+                        params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                    } else {
+                        moreButton.setBackgroundResource(R.drawable.more_blue);
+                        viewPagerOpened = true;
+                        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) inputBar.getLayoutParams();
+                        params.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                        morePages.setVisibility(View.VISIBLE);
+                    }
                 } else {
+                    morePages.requestFocus();
+                    hideKeyboard();
                     moreButton.setBackgroundResource(R.drawable.more_blue);
                     viewPagerOpened = true;
-                    morePages.setVisibility(View.VISIBLE);
                     RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) inputBar.getLayoutParams();
                     params.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                    morePages.setVisibility(View.VISIBLE);
                 }
             }
         });
+    }
 
-
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm.isActive() && this.getCurrentFocus() != null) {
+            if (this.getCurrentFocus().getWindowToken() != null) {
+                imm.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        }
     }
 
     void pageViewInit() {
@@ -103,9 +130,8 @@ public class ChatActivity extends AppCompatActivity {
             gridViewList.add(gridView);
         }
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(gridViewList);
-        viewPager = (ViewPager) findViewById(R.id.view_pager);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
         viewPager.setAdapter(viewPagerAdapter);
-
 //       小圆点在翻页时改变
         pageOneCircle = (ImageView) findViewById(R.id.page_one_circle);
         pageTwoCircle = (ImageView) findViewById(R.id.page_two_circle);
@@ -165,6 +191,4 @@ public class ChatActivity extends AppCompatActivity {
         float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
     }
-
-
 }

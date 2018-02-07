@@ -47,7 +47,6 @@ public class MessageListAdapter extends BaseAdapter {
         avatar.setImageResource(avatars[position]);
         nickname.setText(nickNames[position]);
         return convertView;
-
     }
 }
 

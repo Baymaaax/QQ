@@ -48,5 +48,4 @@ public class PopUpAdapter extends BaseAdapter {
         tv.setText(popupText[position]);
         return convertView;
     }
-
 }

@@ -18,7 +18,6 @@ public class ContactListAdapter extends BaseExpandableListAdapter {
     private Context mContext;
     private String[] groupNames;
 
-
     public ContactListAdapter(Context mContext, String[] groupNames, int[][] contactAvatars,
                               String[][] contactNickNames) {
         this.mContext = mContext;
@@ -88,8 +87,6 @@ public class ContactListAdapter extends BaseExpandableListAdapter {
             @Override
             public boolean onLongClick(View v) {
                 showAvater.show(groupPosition, childPosition);
-
-
                 return true;
             }
         });
@@ -97,7 +94,6 @@ public class ContactListAdapter extends BaseExpandableListAdapter {
             @Override
             public boolean onLongClick(View v) {
                 renameChild.rename(groupPosition, childPosition);
-
                 return true;
             }
         });
@@ -141,6 +137,4 @@ public class ContactListAdapter extends BaseExpandableListAdapter {
     public void setShowAvaterListener(ShowAvater showAvater) {
         this.showAvater = showAvater;
     }
-
-
 }
