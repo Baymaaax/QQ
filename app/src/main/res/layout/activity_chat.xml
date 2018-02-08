@@ -4,6 +4,7 @@
     android:id="@+id/activity_chat"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#30FF4081"
     tools:context="com.example.nyt.qq.ChatActivity">
 
     <RelativeLayout
@@ -46,27 +47,52 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_marginBottom="10dp"
-            android:layout_marginEnd="15dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="10dp"
-            android:layout_toStartOf="@+id/more_button" />
+            android:layout_toStartOf="@id/send"
+            android:textSize="15dp"
+            android:maxLines="8"/>
+
+        <ImageButton
+            android:id="@+id/send"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignBottom="@id/input_edittext"
+            android:layout_marginEnd="8dp"
+            android:layout_toStartOf="@+id/more_button"
+            android:background="@drawable/send" />
 
         <ImageButton
             android:id="@+id/more_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="20dp"
+            android:layout_alignBottom="@id/input_edittext"
+            android:layout_marginEnd="15dp"
             android:background="@drawable/more_gray" />
     </RelativeLayout>
+
+    <ListView
+        android:id="@+id/message_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/input_bar"
+        android:layout_below="@+id/chat_title_bar"
+        android:layout_toEndOf="@+id/more_pages"
+        android:background="@color/greyee"
+        android:padding="10dp"
+        android:clickable="false"
+        android:divider="@null"
+        android:transcriptMode="alwaysScroll"
+        />
+
 
     <LinearLayout
         android:id="@+id/more_pages"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/white"
         android:orientation="vertical"
         android:visibility="gone">
 
@@ -78,7 +104,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:gravity="center"
+            android:gravity="top|center_horizontal"
+            android:background="@color/white"
             android:orientation="horizontal">
 
             <ImageView
