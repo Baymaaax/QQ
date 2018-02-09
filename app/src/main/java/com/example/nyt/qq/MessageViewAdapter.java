@@ -1,8 +1,14 @@
 package com.example.nyt.qq;
 
 
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +17,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -65,21 +72,87 @@ public class MessageViewAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private View setBySendView(int position) {
+    private View setBySendView(final int position) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.message_send, null);
-        ImageView avatar = (ImageView) view.findViewById(R.id.my_avatar);
+        final ImageView avatar = (ImageView) view.findViewById(R.id.my_avatar);
         TextView textSend = (TextView) view.findViewById(R.id.text_send);
         avatar.setImageResource(myAvatar);
         textSend.setText(messageList.get(position).getMessageText());
+        textSend.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                AlertDialog.Builder withdrawDialog = new AlertDialog.Builder(mContext);
+                withdrawDialog.setMessage("是否要撤回这条消息")
+                        .setPositiveButton("撤回", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(mContext,"消息已撤回", Toast.LENGTH_SHORT).show();
+                                messageList.remove(position);
+                                MessageViewAdapter.this.notifyDataSetInvalidated();
+                            }
+                        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).create().show();
+                return true;
+            }
+        });
+        avatar.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Intent intent =new Intent(mContext,ShowAvatarActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putInt("avatar",myAvatar);
+                intent.putExtras(bundle);
+                mContext.startActivity(intent);
+                return true;
+            }
+        });
         return view;
     }
 
-    private View setByReceiveView(int position) {
+    private View setByReceiveView(final int position) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.message_receive, null);
         ImageView avatar = (ImageView) view.findViewById(R.id.friend_avatar);
         TextView textReceive = (TextView) view.findViewById(R.id.text_receive);
         avatar.setImageResource(friendAvatar);
         textReceive.setText(messageList.get(position).getMessageText());
+        textReceive.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                AlertDialog.Builder withdrawDialog = new AlertDialog.Builder(mContext);
+                withdrawDialog.setMessage("是否要撤回这条消息")
+                        .setPositiveButton("撤回", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(mContext,"消息已撤回", Toast.LENGTH_SHORT).show();
+                                messageList.remove(position);
+                                MessageViewAdapter.this.notifyDataSetInvalidated();
+                            }
+                        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).create().show();
+
+
+                return true;
+            }
+        });
+        avatar.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Intent intent =new Intent(mContext,ShowAvatarActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putInt("avatar",friendAvatar);
+                intent.putExtras(bundle);
+                mContext.startActivity(intent);
+                return true;
+            }
+        });
         return view;
     }
 }

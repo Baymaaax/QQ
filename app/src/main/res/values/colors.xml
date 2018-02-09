@@ -7,6 +7,7 @@
     <color name="white">#FFFFFF</color>
     <color name="grey69">#696969</color>
     <color name="grey60">#606060</color>
-    <color name="greyee">#eeeeee</color>
+    <color name="greyef">#efefef</color>
     <color name="black">#000000</color>
+    <color name="transparent">#00ffffff</color>
 </resources>

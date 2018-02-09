@@ -77,7 +77,8 @@ public class ContactListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild,
+                             View convertView, ViewGroup parent) {
         convertView = LayoutInflater.from(mContext).inflate(R.layout.contactlist_child, null);
         final ImageView contactAvatar = (ImageView) convertView.findViewById(R.id.contactlist_avatar);
         TextView contactNickName = (TextView) convertView.findViewById(R.id.contactlist_nickname);

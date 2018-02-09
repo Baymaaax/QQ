@@ -64,9 +64,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MainActivity.this, ChatActivity.class);
-                Bundle bundle =new Bundle();
+                Bundle bundle = new Bundle();
                 bundle.putString("nickname", nickNames[position]);
-                bundle.putInt("friend avatar",avatars[position]);
+                bundle.putInt("friend avatar", avatars[position]);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -182,8 +182,7 @@ public class MainActivity extends AppCompatActivity {
             public void show(final int groupPosition, final int childPosition) {
                 Intent intent = new Intent(MainActivity.this, ShowAvatarActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putInt("groupPosition", groupPosition);
-                bundle.putInt("childPosition", childPosition);
+                bundle.putInt("avatar", contactAvatars[groupPosition][childPosition]);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
