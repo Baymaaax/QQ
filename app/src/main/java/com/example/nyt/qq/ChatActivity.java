@@ -1,11 +1,9 @@
 package com.example.nyt.qq;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -20,6 +18,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +28,9 @@ public class ChatActivity extends AppCompatActivity {
     private int[] moreFunctionsImages = new int[]{R.drawable.qq_phone, R.drawable.video, R.drawable.folder,
             R.drawable.cloud_file, R.drawable.calendar, R.drawable.collection, R.drawable.red_envelope,
             R.drawable.recommend_friend, R.drawable.transfer, R.drawable.location};
+    private int[] avatars = new int[]{R.drawable.bear, R.drawable.chicken, R.drawable.donkey,
+            R.drawable.elephant, R.drawable.frog, R.drawable.hippo, R.drawable.monkey,
+            R.drawable.panda, R.drawable.pig, R.drawable.rabbit, R.drawable.sheep, R.drawable.tiger};
     private ImageButton returnButton, moreButton;
     private RelativeLayout inputBar;
     private ArrayList<GridView> gridViewList;
@@ -38,10 +40,10 @@ public class ChatActivity extends AppCompatActivity {
     private ImageButton sendButton;
     private boolean editTexthasFocus = false;
     private boolean viewPagerOpened = false;
+    private boolean readyToSend = false;
     private ListView messageView;
     private int friendAvatar, myAvatar;
     private final int MYSELF = 1;
-    private final int FRIEND = 0;
     private int sender;
 
     @Override
@@ -63,23 +65,29 @@ public class ChatActivity extends AppCompatActivity {
         pageViewInit();
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     private void messageViewInit(Bundle bundle) {
 
         morePages = (LinearLayout) findViewById(R.id.more_pages);
         moreButton = (ImageButton) findViewById(R.id.more_button);
-        final RelativeLayout inputBar = (RelativeLayout) findViewById(R.id.input_bar);
         moreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                RelativeLayout inputBar = (RelativeLayout) findViewById(R.id.input_bar);
                 if (viewPagerOpened) {
                     moreButton.setBackgroundResource(R.drawable.more_gray);
                     viewPagerOpened = false;
+                    morePages.setVisibility(View.GONE);
                     RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) inputBar.getLayoutParams();
                     params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-                    morePages.setVisibility(View.GONE);
-                } else  {
+                } else if (!editTexthasFocus) {
+                    moreButton.setBackgroundResource(R.drawable.more_blue);
+                    viewPagerOpened = true;
+                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) inputBar.getLayoutParams();
+                    params.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                    morePages.setVisibility(View.VISIBLE);
+                } else {
+                    inputEditText.clearFocus();
+                    hideKeyboard();
                     moreButton.setBackgroundResource(R.drawable.more_blue);
                     viewPagerOpened = true;
                     RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) inputBar.getLayoutParams();
@@ -96,16 +104,13 @@ public class ChatActivity extends AppCompatActivity {
                 if (hasFocus) {
                     editTexthasFocus = true;
                     viewPagerOpened = true;
-                    sendButton.setVisibility(View.VISIBLE);
-                    moreButton.setVisibility(View.GONE);
-                    morePages.setVisibility(View.GONE);
-                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) inputBar.getLayoutParams();
-                    params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-
+                    readyToSend = true;
+                    sendButton.setBackgroundResource(R.drawable.send_ready);
+                    moreButton.callOnClick();
                 } else {
+                    readyToSend = false;
+                    sendButton.setBackgroundResource(R.drawable.send);
                     editTexthasFocus = false;
-                    sendButton.setVisibility(View.GONE);
-                    moreButton.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -121,6 +126,7 @@ public class ChatActivity extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (readyToSend) {
                     if (!inputEditText.getText().toString().isEmpty()) {
                         Message message = new Message(inputEditText.getText().toString(), sender);
                         messageList.add(message);
@@ -130,14 +136,7 @@ public class ChatActivity extends AppCompatActivity {
                     } else {
                         Toast.makeText(ChatActivity.this, "消息不能为空", Toast.LENGTH_SHORT).show();
                     }
-            }
-        });
-        messageView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                inputEditText.clearFocus();
-                hideKeyboard();
-                return true;
+                }
             }
         });
     }
