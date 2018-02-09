@@ -20,7 +20,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,24 +65,24 @@ public class ChatActivity extends AppCompatActivity {
 
     @SuppressLint("ClickableViewAccessibility")
     private void messageViewInit(Bundle bundle) {
+
         morePages = (LinearLayout) findViewById(R.id.more_pages);
         moreButton = (ImageButton) findViewById(R.id.more_button);
         final RelativeLayout inputBar = (RelativeLayout) findViewById(R.id.input_bar);
         moreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (viewPagerOpened) {
                     moreButton.setBackgroundResource(R.drawable.more_gray);
                     viewPagerOpened = false;
-                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) inputBar
-                            .getLayoutParams();
+                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) inputBar.getLayoutParams();
                     params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                     morePages.setVisibility(View.GONE);
-                } else {
+                } else  {
                     moreButton.setBackgroundResource(R.drawable.more_blue);
                     viewPagerOpened = true;
-                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) inputBar
-                            .getLayoutParams();
+                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) inputBar.getLayoutParams();
                     params.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                     morePages.setVisibility(View.VISIBLE);
                 }
@@ -100,8 +99,7 @@ public class ChatActivity extends AppCompatActivity {
                     sendButton.setVisibility(View.VISIBLE);
                     moreButton.setVisibility(View.GONE);
                     morePages.setVisibility(View.GONE);
-                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) inputBar
-                            .getLayoutParams();
+                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) inputBar.getLayoutParams();
                     params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 
                 } else {
@@ -123,16 +121,15 @@ public class ChatActivity extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!inputEditText.getText().toString().isEmpty()) {
-                    Message message = new Message(inputEditText.getText().toString(), sender);
-                    messageList.add(message);
-                    messageViewAdapter.notifyDataSetChanged();
-                    inputEditText.setText("");
-                    sender = (sender + 1) % 2;
-                } else {
-                    Toast.makeText(ChatActivity.this, "消息不能为空", Toast.LENGTH_SHORT)
-                            .show();
-                }
+                    if (!inputEditText.getText().toString().isEmpty()) {
+                        Message message = new Message(inputEditText.getText().toString(), sender);
+                        messageList.add(message);
+                        messageViewAdapter.notifyDataSetChanged();
+                        inputEditText.setText("");
+                        sender = (sender + 1) % 2;
+                    } else {
+                        Toast.makeText(ChatActivity.this, "消息不能为空", Toast.LENGTH_SHORT).show();
+                    }
             }
         });
         messageView.setOnTouchListener(new View.OnTouchListener() {
@@ -208,15 +205,13 @@ public class ChatActivity extends AppCompatActivity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(ChatActivity.this, names.get(position) + "被点击",
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(ChatActivity.this, names.get(position) + "被点击", Toast.LENGTH_SHORT).show();
             }
         });
         gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(ChatActivity.this, "长按" + names.get(position),
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(ChatActivity.this, "长按" + names.get(position), Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
@@ -233,8 +228,7 @@ public class ChatActivity extends AppCompatActivity {
         InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm.isActive() && this.getCurrentFocus() != null) {
             if (this.getCurrentFocus().getWindowToken() != null) {
-                imm.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(),
-                        InputMethodManager.HIDE_NOT_ALWAYS);
+                imm.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             }
         }
     }
